@@ -20,12 +20,14 @@ def save_fig_for_writeup(fig, fname):
 TrafficDataInfo: Class to parse and analyze the traffic sign data
 '''
 class TrafficDataInfo():
-    
+
+    ''' Parse csv file containing class id to sign names'''
     def _populate_ids_to_names(self, names_files):
         with open('signnames.csv', mode='r') as csv_file:
             signs = csv.DictReader(csv_file)
             for row in signs:
                 self._ids_to_names[int(row['ClassId'])] = row['SignName']
+
 
     '''
     @names_file: Csv file that contains a mapping to traffic sign names
