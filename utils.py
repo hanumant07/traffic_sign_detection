@@ -62,12 +62,7 @@ class TrafficDataInfo(object):
 
     Returns:
       A dictionray that maps label id to sample index.
-
-    Raises:
-      ValueError: if labels is not a list.
     """
-    if not isinstance(labels, list):
-      raise ValueError('labels should be a non empty list')
     label_to_data = defaultdict(list)
     for i in range(len(labels)):
       label_to_data[labels[i]].append(i)
@@ -81,12 +76,7 @@ class TrafficDataInfo(object):
 
     Returns:
       sign name for given id.
-
-    Raises:
-      ValueError if label_id is None.
     """
-    if not isinstance(label_id, int):
-      raise ValueError('label_id should be a valid int')
     return self._ids_to_names[label_id]
 
   def get_hist_info(self, labels):
