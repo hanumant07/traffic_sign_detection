@@ -88,7 +88,7 @@ The transformations are as per suggestions in the Yann Le Cunn [paper][http://ya
 
 Here are samples of the original and transformed images.
 
-![alt text][./writeup_dir/preprocess_samples.png]
+![transformed images][./writeup_dir/transforms.png]
 
 ### Design and Test a Model Architecture
 
@@ -116,51 +116,55 @@ My final model consisted of the following layers:
 | Input         		| 32x32x1 RGB image   							| 
 | Convolution 5x5     	| 1x1 stride, same padding, outputs 28x28x6 	|
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
+| Dropout				|												| 
+| Max pooling	      	| 2x2 stride,  outputs 14x14x6 					|
+| Convolution 5x5     	| 1x1 stride, same padding, outputs 10x10x16 	|
+| RELU					|												|
+| Dropout				|												| 
+| Max pooling	      	| 2x2 stride,  outputs 5x5x16 					|
+| Dropout				|												| 
+| Fully connected		| input 400, output 120							|
+| RELU					|												|
+| Dropout				|												|
+| Fully connected		| input 120, output 84							|
+| RELU					|												|
+| Fully connected		| input 84, output 43							|
+| Softmax				|												|
 |						|												|
  
 
+#### 3. Hyperparameters, Optimizers
 
-#### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+I set a learning rate of 0.0009. The low learning rate allows for progress towards high level of accuracy, without overfitting.
 
-To train the model, I used an ....
+I set a batch size of 128. I experimented with different batch sizes, it seems a smaller batchsize, did not allow for 
 
-#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+sufficient representation of all classes in a given batch that led to more erractic learning.
 
-My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+For the optimizer I used the Adam optimizer which has an inbuilt momentum setting.
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
+The loss function was a categorical cross entropy since we are dealing with multi class classification problem.
 
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
+#### 4. Architecture Choice
+
+I used the Lenet architecture.
+
+However to push beyond the original accuracy of 93% , i had to add more data samples using transforms suggested in the original paper.
+
+However with the increased samples , it was essential to add dropouts to prevent overfitting.
+
+The validation accuracy saturated to 99% after 25 epochs, further epochs saw a decline in validation accuracy because of overfitting.
  
 
 ### Test a Model on New Images
 
 #### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
-Here are five German traffic signs that I found on the web:
+Here are ![German traffic signs][./writeup_dir/test_images.png] that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
-
-The first image might be difficult to classify because ...
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+
 
 Here are the results of the prediction:
 
@@ -194,5 +198,17 @@ For the second image ...
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 #### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
+
+Here is a visualization of the feature maps.
+
+These are the first layer convolutional filters.
+![alt_text][./writeup_dir/conv1_fmap.png]
+
+These are the second convolutional layer feature maps.
+![alt_text][./writeup_dir/conv2_fmap.png]
+
+It seems the first layer is responsible for detecting the outline of the sign, and disregarding the surrounding pixels.
+
+The second layer looks to learn edges.
 
 
