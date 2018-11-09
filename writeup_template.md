@@ -62,7 +62,7 @@ Number of validation =  4410
 
 Here is an exploratory visualization of the data set. It is a bar chart showing how many data samples are available for each traffic sign
 
-[initial_samples]: ./writeup_dir/initial_images.png'
+[initial_samples][./writeup_dir/initial_images.png]
 
 I implemented a TrafficDataInfo class to analyze the dataset
 
@@ -88,7 +88,7 @@ The transformations are as per suggestions in the Yann Le Cunn [paper][http://ya
 
 Here are samples of the original and transformed images.
 
-![transformed images][./writeup_dir/transforms.png]
+[transformed images][./writeup_dir/transforms.png]
 
 ### Design and Test a Model Architecture
 
@@ -102,7 +102,7 @@ This prevents the problems related to exploding gradients.
 
 Here are some samples after preprocessing step
 
-![alt text][./writeup_dir/preprocess_samples]
+[preprocess samples][./writeup_dir/preprocess_samples]
 
 
 #### 2.  Model Architecture
